@@ -14,12 +14,14 @@ terraform {
    *  This key will change depending on the application, for now the default will be:
    *  "environment/service/terraform.state"
    */
+
   backend "s3" {
     bucket         = "mup-terraform-state"
-    key            = "dev/mup-user/terraform.tfstate"
-    dynamodb_table = "terraform-state-locking"
+    key            = "infra/terraform.tfstate"
+    dynamodb_table = "mup-terraform-state-locking"
     encrypt        = true
     region         = "us-east-1"
   }
+
 }
 
