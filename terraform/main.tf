@@ -8,7 +8,6 @@ provider "aws" {
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "${var.app}-terraform-state"
   acl    = "private"
-  tags   = var.tags
 
   versioning {
     enabled = true
@@ -35,7 +34,6 @@ resource "aws_dynamodb_table" "terraform_locks" {
   name         = "${var.app}-terraform-state-locking"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
-  tags         = var.tags
 
   attribute {
     name = "LockID"
