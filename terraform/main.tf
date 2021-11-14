@@ -1,13 +1,14 @@
 provider "aws" {
-  region = var.region
+  region  = var.region
 }
 
 /*
  * S3 Terraform State
  */
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-kovi-dev"
+  bucket = "${var.app}-terraform-state"
   acl    = "private"
+  tags   = var.tags
 
   versioning {
     enabled = true
@@ -31,9 +32,10 @@ resource "aws_s3_bucket" "terraform_state" {
  * NOTE: Not change attribute name and hash_key **EVER**
  */
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-state-locking"
+  name         = "${var.app}-terraform-state-locking"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
+  tags         = var.tags
 
   attribute {
     name = "LockID"
